@@ -24,7 +24,7 @@ const serchCounry = () => {
       </li>`
           )
           .join(' ');
-        countryListEl.innerHTML += coutryEl;
+        countryListEl.innerHTML = coutryEl;
       } else if (data.length > 10) {
         Notiflix.Notify.info(
           'Too many matches found. Please enter a more specific name.'
