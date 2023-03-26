@@ -8,34 +8,23 @@ const inputEl = document.querySelector('#search-box');
 const countryListEl = document.querySelector('.country-list');
 const countryInfoEl = document.querySelector('.country-info');
 
-const serchCounry = () => {
-  const serchQuery = inputEl.value.trim();
-  if (serchQuery != '') {
-    fetchCountries(serchQuery).then(data => {
-      countryInfoEl.innerHTML = '';
-      if (data.length > 1 && data.length <= 10) {
-        const coutryEl = data
-          .map(
-            element => `
+const counryListMarkup = data => {
+  return data
+    .map(
+      element => `
       <li class="country-item">
       <img src = "${element.flags.svg}" width="50" 
   >
       <p class="country-name">${element.name.official}</p>
       </li>`
-          )
-          .join(' ');
-        countryListEl.innerHTML = coutryEl;
-      } else if (data.length > 10) {
-        Notiflix.Notify.info(
-          'Too many matches found. Please enter a more specific name.'
-        );
-      } else if (data.length === 1) {
-        countryListEl.innerHTML = '';
-        const coutryEl = data
-          .map(
-            element => ` <img src = "${
-              element.flags.svg
-            }" width="40" height = "40" 
+    )
+    .join(' ');
+};
+
+const countryCardMarkup = data => {
+  return data
+    .map(
+      element => ` <img src = "${element.flags.svg}" width="40" height = "40" 
   >
    <p class="country-name country-title">${element.name.official}</p>
    <ul>
@@ -48,9 +37,24 @@ const serchCounry = () => {
       ).join(', ')}</li>
     </ul>
         `
-          )
-          .join(' ');
-        countryInfoEl.innerHTML = coutryEl;
+    )
+    .join(' ');
+};
+
+const serchCounry = () => {
+  const serchQuery = inputEl.value.trim();
+  if (serchQuery != '') {
+    fetchCountries(serchQuery).then(data => {
+      countryInfoEl.innerHTML = '';
+      if (data.length > 1 && data.length <= 10) {
+        countryListEl.innerHTML = counryListMarkup(data);
+      } else if (data.length > 10) {
+        Notiflix.Notify.info(
+          'Too many matches found. Please enter a more specific name.'
+        );
+      } else if (data.length === 1) {
+        countryListEl.innerHTML = '';
+        countryInfoEl.innerHTML = countryCardMarkup(data);
       }
     });
   } else {
