@@ -29,7 +29,7 @@ const serchCounry = () => {
         Notiflix.Notify.info(
           'Too many matches found. Please enter a more specific name.'
         );
-      } else if ((data.length = 1)) {
+      } else if (data.length === 1) {
         countryListEl.innerHTML = '';
         const coutryEl = data
           .map(
