@@ -51,10 +51,6 @@ const serchCounry = () => {
           )
           .join(' ');
         countryInfoEl.innerHTML = coutryEl;
-      } else {
-        return Notiflix.Notify.failure(
-          'Oops, there is no country with that name'
-        );
       }
     });
   } else {
