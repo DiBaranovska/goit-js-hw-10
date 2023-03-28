@@ -44,22 +44,26 @@ const countryCardMarkup = data => {
 const serchCounry = () => {
   const serchQuery = inputEl.value.trim();
   if (serchQuery != '') {
-    fetchCountries(serchQuery).then(data => {
-      countryInfoEl.innerHTML = '';
-      if (data.length > 1 && data.length <= 10) {
-        countryListEl.innerHTML = counryListMarkup(data);
-      } else if (data.length > 10) {
-        Notiflix.Notify.info(
-          'Too many matches found. Please enter a more specific name.'
-        );
-      } else if (data.length === 1) {
-        countryListEl.innerHTML = '';
-        countryInfoEl.innerHTML = countryCardMarkup(data);
-      }
-    });
-  } else {
-    countryInfoEl.innerHTML = '';
-    countryListEl.innerHTML = '';
+    fetchCountries(serchQuery)
+      .then(data => {
+        countryInfoEl.innerHTML = '';
+        if (data.length > 1 && data.length <= 10) {
+          countryListEl.innerHTML = counryListMarkup(data);
+        } else if (data.length > 10) {
+          countryInfoEl.innerHTML = '';
+          countryListEl.innerHTML = '';
+          Notiflix.Notify.info(
+            'Too many matches found. Please enter a more specific name.'
+          );
+        } else if (data.length === 1) {
+          countryListEl.innerHTML = '';
+          countryInfoEl.innerHTML = countryCardMarkup(data);
+        } else {
+          countryInfoEl.innerHTML = '';
+          countryListEl.innerHTML = '';
+        }
+      })
+      .catch(console.warn);
   }
 };
 
